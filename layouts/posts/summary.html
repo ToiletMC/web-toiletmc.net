@@ -1,0 +1,13 @@
+<li class="post-summary">
+	{{ if .Params.image }}
+	<div class="post-summary-image">
+		<img src="{{ .Params.image }}" alt="Photo of {{ .Title }}">
+	</div>
+	{{ end }}
+
+	<div class="post-summary-content {{ if .Params.image }}has-post-summary-image{{ end }}">
+		<h3 class="post-summary-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+		{{ .Render "summary-details" }}
+	</div>
+	<p class="post-summary-excerpt">{{ .Summary }}</p>
+</li>

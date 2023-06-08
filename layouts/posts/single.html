@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="content">
+	{{ .Render "summary-details" }}
+	<div>{{ .Content }}</div>
+
+	<h2>Keep reading</h2>
+	<ol class="post-links post-list">
+		{{ with .NextInSection }}
+		{{ .Render "summary" }}
+		{{ end }}
+
+		{{ with .PrevInSection }}
+		{{ .Render "summary" }}
+		{{ end }}
+	</ol>
+
+</article>
+{{ end }}

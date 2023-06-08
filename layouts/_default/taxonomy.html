@@ -1,0 +1,16 @@
+{{ define "main" }}
+<article class="content">
+  <div>{{ .Content }}</div>
+
+  <p>You're currently looking at posts categorised under <strong>{{ .Title }}</strong>. <a href="/blog/">View all
+      posts</a> instead.</p>
+
+  <ol class="post-list">
+    {{ range .Paginator.Pages }}
+    {{ .Render "summary" }}
+    {{ end }}
+  </ol>
+
+  {{ template "_internal/pagination.html" . }}
+</article>
+{{ end }}

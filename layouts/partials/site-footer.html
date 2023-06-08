@@ -1,0 +1,28 @@
+<footer>
+	<div class="container">
+		<div class="footer-columns">
+			<ul class="footer-links">
+				<li>
+					<h2>Social</h2>
+				</li>
+				{{ range $.Site.Data.company.social_links }}
+				<li>
+					<a target="_blank" rel="noopener" href="{{ .link }}" class="{{ .name | urlize }}-icon">
+						{{ partial "social-icon.html" . }}
+						{{ .name }}
+					</a>
+				</li>
+				{{ end }}
+			</ul>
+		</div>
+	</div>
+
+	<div class="legal-line">
+		<p class="container">
+			&copy; {{ now.Format "2006" }} {{ $.Site.Data.company.title }} &bull;
+			<a href="/terms/">Terms</a>
+			&bull;
+			Template by <a href="https://cloudcannon.com/">CloudCannon</a>
+		</p>
+	</div>
+</footer>
