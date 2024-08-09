@@ -4,6 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  /* background-color: #5c75ec; */
 }
 #root {
   aspect-ratio: 1512 / 982;

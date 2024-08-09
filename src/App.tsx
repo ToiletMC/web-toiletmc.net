@@ -12,6 +12,7 @@ import bg3 from "./assets/bg3.jpeg";
 import bg4 from "./assets/bg4.jpeg";
 import React from "react";
 import clsx from "clsx";
+import toast, { Toaster } from "react-hot-toast";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import CSSPlugin from "gsap/CSSPlugin";
@@ -351,16 +352,17 @@ export default function App() {
             css={css`
               position: absolute;
               top: 23px;
-              left: 50%;
+              left: 60%;
               transform: translateX(-50%);
               font-family: "Libre Barcode 128 Text";
               font-size: 128px;
               color: #5c75ec;
-
-              @media (max-width: 830px) {
-                opacity: 0;
-              }
+              cursor: pointer;
             `}
+            onClick={() => {
+              navigator.clipboard.writeText("play.toiletmc.net");
+              toast("复制成功 :)");
+            }}
           >
             play.toiletmc.net
           </div>
@@ -368,16 +370,14 @@ export default function App() {
           <div
             css={css`
               position: absolute;
-              top: 1rem;
-              right: 0;
+              bottom: -70px;
+              right: 233px;
               font-family: "Lyusung";
               color: #5c75ec;
               font-size: 128px;
             `}
           >
-            厕所
-            <br />
-            总部
+            厕所总部
           </div>
         </section>
         {/* 链接 */}
@@ -546,6 +546,7 @@ export default function App() {
           <img src={src} alt="bg" key={src} />
         ))}
       </div>
+      <Toaster />
     </div>
   );
 }
