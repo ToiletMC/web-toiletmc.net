@@ -493,6 +493,7 @@ export default function App() {
           width: 100%;
           background-color: #5c75ec;
           height: 64px;
+          z-index: 1;
         `}
         ref={ledBoxRef}
       >
@@ -534,6 +535,24 @@ export default function App() {
           <div>{descriptions[0]}</div>
         </div>
       </section>
+      {/* 备案 */}
+      <span
+        css={css`
+          position: absolute;
+          bottom: 0px;
+          left: 20px;
+        `}
+      >
+        <BorderLink
+          target="_blank"
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011302000137"
+        >
+          浙公网安备 33011302000137号
+        </BorderLink>
+        <BorderLink href="https://beian.miit.gov.cn/" target="“_blank”">
+          浙ICP备2021038660号-4
+        </BorderLink>
+      </span>
       {/* 图片预加载 */}
       <div
         css={css`
@@ -593,4 +612,10 @@ const CornerButton = styled.button`
   &:active {
     transform: scale(0.7);
   }
+`;
+
+const BorderLink = styled.a`
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
 `;
