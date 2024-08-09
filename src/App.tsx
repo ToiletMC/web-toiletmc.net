@@ -121,7 +121,7 @@ export default function App() {
       duration: 1,
     });
     gsap.to(linksRef.current, {
-      opacity: 0,
+      bottom: -200,
       duration: 1,
     });
     gsap.to(ledBoxRef.current, {
@@ -174,7 +174,7 @@ export default function App() {
       duration: 1,
     });
     gsap.to(linksRef.current, {
-      opacity: 1,
+      bottom: 100,
       duration: 1,
     });
     gsap.to(ledBoxRef.current, {
@@ -226,6 +226,7 @@ export default function App() {
             /* to */
             /* mask-size: 1000000% 1000000%;
           mask-position: center; */
+            /* box-shadow: 0 0 100px #000 inset; */
 
             > img {
               width: 100%;
@@ -279,6 +280,10 @@ export default function App() {
               font-family: "Libre Barcode 128 Text";
               font-size: 128px;
               color: #5c75ec;
+
+              @media (max-width: 830px) {
+                opacity: 0;
+              }
             `}
           >
             play.toiletmc.net
