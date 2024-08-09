@@ -4,6 +4,8 @@ import StgDanger from "./assets/stg_danger.svg?react";
 import Hand from "./assets/hand.svg?react";
 import Left from "./assets/left.svg?react";
 import Right from "./assets/right.svg?react";
+import Play from "./assets/play.svg?react";
+import Stop from "./assets/stop.svg?react";
 import bg1 from "./assets/bg1.png";
 import bg2 from "./assets/bg2.png";
 import bg3 from "./assets/bg3.jpeg";
@@ -314,11 +316,12 @@ export default function App() {
             top: 0;
             left: 0;
             right: 0;
-            bottom: ${playing ? "44px" : "0"};
+            bottom: 44px;
             z-index: 5;
-            box-shadow: 0 0 ${playing ? "500px" : "0"} rgb(8% 8% 8%) inset;
+            box-shadow: 0 0 500px rgb(8% 8% 8%) inset;
             pointer-events: none;
-            transition: 0.5s ease-out;
+            transition: 0.15s;
+            opacity: ${playing ? 1 : 0};
           `}
         ></div>
         {/* 顶部 */}
@@ -436,6 +439,7 @@ export default function App() {
             <BottomLink href="#">About</BottomLink>
           </div>
         </section>
+        {/* 角落 */}
         <section
           css={css`
             position: absolute;
@@ -457,7 +461,9 @@ export default function App() {
               >
                 <Left />
               </CornerButton>
-              <CornerButton onClick={stop}>stop</CornerButton>
+              <CornerButton onClick={stop}>
+                <Stop />
+              </CornerButton>
               <CornerButton
                 css={css`
                   padding-left: 10px;
@@ -469,7 +475,9 @@ export default function App() {
             </>
           ) : (
             <>
-              <CornerButton onClick={play}>play</CornerButton>
+              <CornerButton onClick={play}>
+                <Play />
+              </CornerButton>
             </>
           )}
         </section>
@@ -567,6 +575,7 @@ const CornerButton = styled.button`
   width: 50px;
   height: 50px;
   background: #5c75ec;
+  color: #fff;
   border-radius: 500%;
   border: none;
   outline: none;
