@@ -617,7 +617,7 @@ const CornerButton = styled.button`
 `;
 
 const BorderLink = styled.a`
-  color: #fff;
+  color: rgb(100% 100% 100% / 40%);
   font-size: 12px;
   text-decoration: none;
 `;
