@@ -30,7 +30,7 @@ export default function App() {
   const buttonsRef = React.useRef<HTMLDivElement | null>(null);
   const [playing, setPlaying] = React.useState(false);
   const [animating, setAnimating] = React.useState(false);
-  const [ledText, setLedText] = React.useState(
+  const [ledText, _setLedText] = React.useState(
     "这是一个非常无聊但因为有趣的人而有趣起来的服务器"
   );
 
