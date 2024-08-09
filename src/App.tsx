@@ -540,7 +540,9 @@ export default function App() {
         css={css`
           position: absolute;
           bottom: 0px;
-          left: 20px;
+          right: 20px;
+          display: flex;
+          gap: 8px;
         `}
       >
         <BorderLink
