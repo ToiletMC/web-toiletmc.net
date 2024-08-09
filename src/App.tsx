@@ -36,7 +36,8 @@ export default function App() {
   );
 
   useGSAP(() => {
-    return gsap.fromTo(
+    // led滚动条动画
+    gsap.fromTo(
       ledRef.current,
       { translateX: 0 },
       { translateX: "-100%", repeat: -1, duration: 5, ease: "linear" }
@@ -44,6 +45,7 @@ export default function App() {
   });
 
   function prevImage() {
+    // 防止打断
     if (animating) return;
     setAnimating(true);
     curBgIndex.current =
@@ -65,6 +67,7 @@ export default function App() {
       });
   }
   function nextImage() {
+    // 防止打断
     if (animating) return;
     setAnimating(true);
     curBgIndex.current = (curBgIndex.current + 1) % images.length;
@@ -85,6 +88,7 @@ export default function App() {
       });
   }
   function play() {
+    // 防止打断
     if (animating) return;
     setAnimating(true);
     setLinksExpanded(false);
@@ -137,6 +141,7 @@ export default function App() {
     }, 2000);
   }
   function stop() {
+    // 防止打断
     if (animating) return;
     setAnimating(true);
     setPlaying(false);
@@ -208,6 +213,7 @@ export default function App() {
           border: 20px solid #5c75ec;
         `}
       >
+        {/* 页面中间的文字，会展开变成图片 */}
         <div
           css={css`
             width: 100%;
@@ -236,6 +242,7 @@ export default function App() {
           `}
           ref={bgRef}
         >
+          {/* 收起时的蓝色文字 */}
           <div
             css={css`
               position: absolute;
@@ -250,6 +257,7 @@ export default function App() {
           ></div>
           <img src={images[0]} alt="bg" />
         </div>
+        {/* 占位 */}
         <section
           css={css`
             position: absolute;
@@ -271,6 +279,7 @@ export default function App() {
               opacity: 0;
             `}
           />
+          {/* 条码 */}
           <div
             css={css`
               position: absolute;
@@ -288,6 +297,7 @@ export default function App() {
           >
             play.toiletmc.net
           </div>
+          {/* 四个字 */}
           <div
             css={css`
               position: absolute;
@@ -314,6 +324,7 @@ export default function App() {
           `}
           ref={linksRef}
         >
+          {/* 手指 */}
           <Hand
             onClick={() => setLinksExpanded((prev) => !prev)}
             css={css`
@@ -336,6 +347,7 @@ export default function App() {
               expanded: linksExpanded,
             })}
           />
+          {/* 链接 */}
           <div
             css={css`
               width: 100%;
@@ -369,6 +381,7 @@ export default function App() {
           `}
           ref={buttonsRef}
         >
+          {/* 角落的按钮 */}
           {playing ? (
             <>
               <CornerButton
@@ -418,6 +431,18 @@ export default function App() {
           <LEDText>{ledText}</LEDText>
         </div>
       </section>
+      {/* 图片预加载 */}
+      <div
+        css={css`
+          display: inline;
+          width: 0;
+          height: 0;
+        `}
+      >
+        {images.map((src) => (
+          <img src={src} alt="bg" key={src} />
+        ))}
+      </div>
     </div>
   );
 }
