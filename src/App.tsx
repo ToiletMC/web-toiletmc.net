@@ -17,11 +17,13 @@ import CSSPlugin from "gsap/CSSPlugin";
 gsap.registerPlugin(useGSAP, CSSPlugin);
 
 const images = [bg1, bg2, bg3, bg4];
+const descriptions = ["desc1", "desc2", "desc3", "desc4"];
 const maskPath = new URL("./assets/stg_danger.svg#a", import.meta.url).href;
 
 export default function App() {
   const [linksExpanded, setLinksExpanded] = React.useState(false);
   const ledRef = React.useRef<HTMLDivElement | null>(null);
+  const imgLedRef = React.useRef<HTMLDivElement | null>(null);
   const bgRef = React.useRef<HTMLDivElement | null>(null);
   const curBgIndex = React.useRef(0);
   const dangerRef = React.useRef<HTMLDivElement | null>(null);
@@ -54,6 +56,7 @@ export default function App() {
     el.src = images[curBgIndex.current];
     el.alt = "bg";
     bgRef.current?.insertBefore(el, bgRef.current.firstChild!.nextSibling!);
+    prevDescription();
     gsap
       .fromTo(
         bgRef.current,
@@ -75,6 +78,7 @@ export default function App() {
     el.src = images[curBgIndex.current];
     el.alt = "bg";
     bgRef.current?.appendChild(el);
+    nextDescription();
     gsap
       .fromTo(
         bgRef.current,
@@ -86,6 +90,29 @@ export default function App() {
         bgRef.current!.style.marginLeft = "0";
         setAnimating(false);
       });
+  }
+  function prevDescription() {
+    const el = document.createElement("div");
+    el.textContent = descriptions[curBgIndex.current];
+    imgLedRef.current?.insertBefore(el, imgLedRef.current.firstChild!);
+    gsap.to(imgLedRef.current!.lastChild, { opacity: 0, marginLeft: 100 });
+    gsap.from(el, { opacity: 0, marginLeft: -100 }).then(() => {
+      imgLedRef.current?.removeChild(imgLedRef.current.lastChild!);
+      imgLedRef.current!.style.marginLeft = "0";
+      setAnimating(false);
+    });
+  }
+  function nextDescription() {
+    setAnimating(true);
+    const el = document.createElement("div");
+    el.textContent = descriptions[curBgIndex.current];
+    imgLedRef.current?.appendChild(el);
+    gsap.to(imgLedRef.current!.firstChild, { opacity: 0, marginLeft: -100 });
+    gsap.from(el, { opacity: 0, marginLeft: 100 }).then(() => {
+      imgLedRef.current?.removeChild(imgLedRef.current.firstChild!);
+      imgLedRef.current!.style.marginLeft = "0";
+      setAnimating(false);
+    });
   }
   function play() {
     // 防止打断
@@ -120,12 +147,23 @@ export default function App() {
           mask: "none",
         });
       });
+    setTimeout(() => {
+      gsap.to(ledRef.current, {
+        bottom: -100,
+        opacity: 0,
+      });
+      gsap.to(imgLedRef.current, {
+        marginLeft: 0,
+        opacity: 1,
+      });
+    }, 300);
     gsap.to(dangerRef.current, {
       opacity: 0,
       duration: 1,
     });
     gsap.to(linksRef.current, {
       bottom: -200,
+      opacity: 0,
       duration: 1,
     });
     gsap.to(ledBoxRef.current, {
@@ -145,6 +183,14 @@ export default function App() {
     if (animating) return;
     setAnimating(true);
     setPlaying(false);
+    gsap.to(ledRef.current, {
+      bottom: 0,
+      opacity: 1,
+    });
+    gsap.to(imgLedRef.current, {
+      marginLeft: -100,
+      opacity: 0,
+    });
     gsap.from(bgRef.current, {
       clearProps: "mask",
       duration: 0,
@@ -180,6 +226,7 @@ export default function App() {
     });
     gsap.to(linksRef.current, {
       bottom: 100,
+      opacity: 1,
       duration: 1,
     });
     gsap.to(ledBoxRef.current, {
@@ -202,6 +249,10 @@ export default function App() {
         height: 100%;
         position: relative;
         overflow: hidden;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, avenir next,
+          avenir, helvetica, helvetica neue, ubuntu, roboto, noto, segoe ui,
+          arial, PingFang SC, Hiragino Sans GB, Noto Serif SC, Microsoft Yahei,
+          WenQuanYi Micro Hei, ST Heiti, sans-serif;
       `}
     >
       <div
@@ -232,7 +283,6 @@ export default function App() {
             /* to */
             /* mask-size: 1000000% 1000000%;
           mask-position: center; */
-            /* box-shadow: 0 0 100px #000 inset; */
 
             > img {
               width: 100%;
@@ -257,7 +307,21 @@ export default function App() {
           ></div>
           <img src={images[0]} alt="bg" />
         </div>
-        {/* 占位 */}
+        {/* 阴影 */}
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: ${playing ? "44px" : "0"};
+            z-index: 5;
+            box-shadow: 0 0 ${playing ? "500px" : "0"} rgb(8% 8% 8%) inset;
+            pointer-events: none;
+            transition: 0.5s ease-out;
+          `}
+        ></div>
+        {/* 顶部 */}
         <section
           css={css`
             position: absolute;
@@ -313,6 +377,7 @@ export default function App() {
             总部
           </div>
         </section>
+        {/* 链接 */}
         <section
           css={css`
             width: 100%;
@@ -335,7 +400,7 @@ export default function App() {
               z-index: 1;
               transition: 0.3s;
               cursor: pointer;
-              margin-top: -50px;
+              margin-top: -60px;
               transform: rotate(90deg);
 
               &.expanded {
@@ -409,6 +474,7 @@ export default function App() {
           )}
         </section>
       </div>
+      {/* led */}
       <section
         css={css`
           position: absolute;
@@ -418,17 +484,46 @@ export default function App() {
           font-size: 3em;
           width: 100%;
           background-color: #5c75ec;
+          height: 64px;
         `}
         ref={ledBoxRef}
       >
         <div
           css={css`
+            opacity: 0;
+          `}
+        >
+          占位
+        </div>
+        <div
+          css={css`
             white-space: nowrap;
+            position: absolute;
+            top: 0;
+            left: 0;
           `}
           ref={ledRef}
         >
           <LEDText>{ledText}</LEDText>
           <LEDText>{ledText}</LEDText>
+        </div>
+        <div
+          css={css`
+            margin-left: 100px;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-left: 0.5em;
+
+            > div {
+              display: inline-block;
+              position: absolute;
+            }
+          `}
+          ref={imgLedRef}
+        >
+          <div>{descriptions[0]}</div>
         </div>
       </section>
       {/* 图片预加载 */}
@@ -469,8 +564,8 @@ const LEDText = styled.span`
 `;
 
 const CornerButton = styled.button`
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   background: #5c75ec;
   border-radius: 500%;
   border: none;
@@ -484,5 +579,8 @@ const CornerButton = styled.button`
 
   &:hover {
     outline-width: 8px;
+  }
+  &:active {
+    transform: scale(0.7);
   }
 `;
