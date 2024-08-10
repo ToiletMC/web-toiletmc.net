@@ -12,12 +12,14 @@ body {
 }
 * {
   box-sizing: border-box;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-@font-face {
-  font-family: "Lyusung";
-  src: url("./assets/Lyusung.ttf") format("truetype");
-}
+/* @font-face {
+  font-family: "Chusung";
+  src: url("./assets/Chusung.woff2");
+} */
 @font-face {
   font-family: "TestMartinaPlanijn";
   src: url("./assets/TestMartinaPlantijn-Medium.otf");

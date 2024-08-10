@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import StgDanger from "./assets/stg_danger.svg?react";
+import StgDanger from "./assets/stg_danger_edited.svg?react";
 import Hand from "./assets/hand.svg?react";
 import Left from "./assets/left.svg?react";
 import Right from "./assets/right.svg?react";
@@ -10,6 +10,7 @@ import bg1 from "./assets/bg1.png";
 import bg2 from "./assets/bg2.png";
 import bg3 from "./assets/bg3.jpeg";
 import bg4 from "./assets/bg4.jpeg";
+import Cszb from "./assets/cszb.svg?react";
 import React from "react";
 import clsx from "clsx";
 import toast, { Toaster } from "react-hot-toast";
@@ -21,7 +22,8 @@ gsap.registerPlugin(useGSAP, CSSPlugin);
 
 const images = [bg1, bg2, bg3, bg4];
 const descriptions = ["desc1", "desc2", "desc3", "desc4"];
-const maskPath = new URL("./assets/stg_danger.svg#a", import.meta.url).href;
+const maskPath = new URL("./assets/stg_danger_edited.svg", import.meta.url)
+  .href;
 
 export default function App() {
   const [linksExpanded, setLinksExpanded] = React.useState(false);
@@ -135,11 +137,11 @@ export default function App() {
       .fromTo(
         bgRef.current,
         {
-          maskSize: "100% 100%",
+          maskSize: "90%",
           marginTop: "-8rem",
         },
         {
-          maskSize: "6000% 6000%",
+          maskSize: "6000%",
           // marginTop: 0,
           duration: 1,
           ease: "power2.in",
@@ -150,17 +152,18 @@ export default function App() {
           mask: "none",
         });
       });
-    setTimeout(() => {
-      gsap.to(ledRef.current, {
-        bottom: -100,
-        opacity: 0,
-      });
-      gsap.to(imgLedRef.current, {
-        marginLeft: 0,
-        opacity: 1,
-      });
-    }, 300);
+    gsap.to(ledRef.current, {
+      bottom: -100,
+      opacity: 0,
+      delay: 0.3,
+    });
+    gsap.to(imgLedRef.current, {
+      marginLeft: 0,
+      opacity: 1,
+      delay: 0.3,
+    });
     gsap.to(dangerRef.current, {
+      top: -200,
       opacity: 0,
       duration: 1,
     });
@@ -205,27 +208,28 @@ export default function App() {
     gsap.fromTo(
       bgRef.current,
       {
-        maskSize: "6000% 6000%",
+        maskSize: "6000%",
         maskPosition: "center",
         // marginTop: 0,
       },
       {
-        maskSize: "100% 100%",
+        maskSize: "90%",
         // marginTop: "-8rem",
         duration: 1,
         ease: "power2.out",
         clearProps: "mask",
       }
     );
-    setTimeout(() => {
-      gsap.to(bgRef.current, {
-        marginTop: "-8rem",
-        duration: 0.5,
-      });
-    }, 750);
+    gsap.to(bgRef.current, {
+      marginTop: "-8rem",
+      duration: 0.5,
+      delay: 0.75,
+    });
     gsap.to(dangerRef.current, {
+      top: 35,
       opacity: 1,
       duration: 1,
+      delay: 0.5,
     });
     gsap.to(linksRef.current, {
       bottom: 100,
@@ -280,7 +284,7 @@ export default function App() {
             mask-image: url("${maskPath}");
             mask-repeat: no-repeat;
             /* from */
-            mask-size: contain;
+            mask-size: 90%;
             mask-position: center;
             margin-top: -8rem;
             /* to */
@@ -348,12 +352,11 @@ export default function App() {
             `}
           />
           {/* 条码 */}
-          <div
+          {/* <div
             css={css`
               position: absolute;
               top: 23px;
-              left: 60%;
-              transform: translateX(-50%);
+              left: 35%;
               font-family: "Libre Barcode 128 Text";
               font-size: 128px;
               color: #5c75ec;
@@ -365,7 +368,7 @@ export default function App() {
             }}
           >
             play.toiletmc.net
-          </div>
+          </div> */}
           {/* 四个字 */}
           <div
             css={css`
@@ -375,6 +378,7 @@ export default function App() {
               font-family: "Lyusung";
               color: #5c75ec;
               font-size: 128px;
+              opacity: 0;
             `}
           >
             厕所总部
@@ -398,7 +402,7 @@ export default function App() {
             css={css`
               position: absolute;
               left: 70px;
-              top: 50%;
+              bottom: 30px;
               transform: translateY(-50%);
               z-index: 1;
               transition: 0.3s;
@@ -425,6 +429,8 @@ export default function App() {
               transform: translateX(-100%);
               opacity: 0;
               transition: 0.3s;
+              position: absolute;
+              bottom: -10px;
 
               &.expanded {
                 transform: translateX(0);
@@ -437,6 +443,47 @@ export default function App() {
           >
             <BottomLink href="https://wiki.toiletmc.net">Wiki</BottomLink>
             <BottomLink href="#">About</BottomLink>
+          </div>
+          <div
+            css={css`
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              gap: 100px;
+              transform: translateX(-100%);
+              opacity: 0;
+              transition: 0.3s;
+              position: absolute;
+              bottom: -10px;
+
+              &.expanded {
+                transform: translateX(0);
+                opacity: 1;
+              }
+            `}
+            className={clsx({
+              expanded: !linksExpanded,
+            })}
+          >
+            <BottomLink
+              href="https://wiki.toiletmc.net"
+              css={css`
+                position: relative;
+                top: -30px;
+              `}
+            >
+              <span
+                css={css`
+                  position: absolute;
+                  font-size: 1.75rem;
+                  left: 100px;
+                  top: 20px;
+                `}
+              >
+                下载整合包 by lwj_666
+              </span>
+              Download
+            </BottomLink>
           </div>
         </section>
         {/* 角落 */}
