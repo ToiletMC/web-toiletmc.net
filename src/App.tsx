@@ -4,16 +4,15 @@ import StgDanger from "./assets/stg_danger_edited.svg?react";
 import Hand from "./assets/hand.svg?react";
 import Left from "./assets/left.svg?react";
 import Right from "./assets/right.svg?react";
-import Play from "./assets/play.svg?react";
+// import Play from "./assets/play.svg?react";
 import Stop from "./assets/stop.svg?react";
 import bg1 from "./assets/bg1.png";
 import bg2 from "./assets/bg2.png";
 import bg3 from "./assets/bg3.jpeg";
 import bg4 from "./assets/bg4.jpeg";
-import Cszb from "./assets/cszb.svg?react";
 import React from "react";
 import clsx from "clsx";
-import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from "react-hot-toast";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import CSSPlugin from "gsap/CSSPlugin";
@@ -180,6 +179,16 @@ export default function App() {
     gsap.to(buttonsRef.current, {
       bottom: 95,
     });
+    gsap.to(buttonsRef.current!.firstChild, {
+      translateX: 0,
+      ease: "power2.out",
+      duration: 0.2,
+    });
+    gsap.to(buttonsRef.current!.firstChild!.nextSibling, {
+      translateX: 0,
+      ease: "power2.out",
+      duration: 0.2,
+    });
     setTimeout(() => {
       setAnimating(false);
     }, 2000);
@@ -243,6 +252,16 @@ export default function App() {
     gsap.to(buttonsRef.current, {
       bottom: 151,
       clearProps: "bottom",
+    });
+    gsap.to(buttonsRef.current!.firstChild, {
+      translateX: 204,
+      ease: "power2.out",
+      duration: 0.2,
+    });
+    gsap.to(buttonsRef.current!.firstChild!.nextSibling, {
+      translateX: 102,
+      ease: "power2.out",
+      duration: 0.2,
     });
     setTimeout(() => {
       setAnimating(false);
@@ -493,40 +512,37 @@ export default function App() {
             bottom: 151px;
             right: 45px;
             display: flex;
-            gap: 2rem;
+            gap: 32px;
           `}
           ref={buttonsRef}
         >
           {/* 角落的按钮 */}
-          {playing ? (
-            <>
-              <CornerButton
-                css={css`
-                  padding-right: 10px;
-                `}
-                onClick={prevImage}
-              >
-                <Left />
-              </CornerButton>
-              <CornerButton onClick={stop}>
-                <Stop />
-              </CornerButton>
-              <CornerButton
-                css={css`
-                  padding-left: 10px;
-                `}
-                onClick={nextImage}
-              >
-                <Right />
-              </CornerButton>
-            </>
-          ) : (
-            <>
-              <CornerButton onClick={play}>
-                <Play />
-              </CornerButton>
-            </>
-          )}
+          <CornerButton
+            css={css`
+              padding-right: 10px;
+              transform: translateX(204px);
+            `}
+            onClick={prevImage}
+          >
+            <Left />
+          </CornerButton>
+          <CornerButton
+            css={css`
+              transform: translateX(102px);
+            `}
+            onClick={stop}
+          >
+            <Stop />
+          </CornerButton>
+          <CornerButton
+            css={css`
+              padding-left: 10px;
+              z-index: 1;
+            `}
+            onClick={playing ? nextImage : play}
+          >
+            <Right />
+          </CornerButton>
         </section>
       </div>
       {/* led */}
@@ -614,7 +630,7 @@ export default function App() {
           <img src={src} alt="bg" key={src} />
         ))}
       </div>
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 }
@@ -641,11 +657,10 @@ const LEDText = styled.span`
 `;
 
 const CornerButton = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   background: #5c75ec;
   color: #fff;
-  border-radius: 500%;
   border: none;
   outline: none;
   display: flex;
@@ -659,7 +674,7 @@ const CornerButton = styled.button`
     outline-width: 8px;
   }
   &:active {
-    transform: scale(0.7);
+    background: #000;
   }
 `;
 
