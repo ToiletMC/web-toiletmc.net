@@ -6,14 +6,11 @@ body {
   height: 100vh;
   /* background-color: #5c75ec; */
 }
-#root {
-  aspect-ratio: 1512 / 982;
-  height: 100vh;
-}
 * {
   box-sizing: border-box;
   user-select: none;
   -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* @font-face {

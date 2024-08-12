@@ -4,23 +4,14 @@ import StgDanger from "./assets/stg_danger_edited.svg?react";
 import Hand from "./assets/hand.svg?react";
 import Left from "./assets/left.svg?react";
 import Right from "./assets/right.svg?react";
-// import Play from "./assets/play.svg?react";
 import Stop from "./assets/stop.svg?react";
-import bg1 from "./assets/bg1.png";
-import bg2 from "./assets/bg2.png";
-import bg3 from "./assets/bg3.jpeg";
-import bg4 from "./assets/bg4.jpeg";
 import React from "react";
 import clsx from "clsx";
-// import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import CSSPlugin from "gsap/CSSPlugin";
+import { images, descriptions } from "./images";
 
-gsap.registerPlugin(useGSAP, CSSPlugin);
-
-const images = [bg1, bg2, bg3, bg4];
-const descriptions = ["desc1", "desc2", "desc3", "desc4"];
 const maskPath = new URL("./assets/stg_danger_edited.svg", import.meta.url)
   .href;
 
@@ -36,12 +27,21 @@ export default function App() {
   const buttonsRef = React.useRef<HTMLDivElement | null>(null);
   const [playing, setPlaying] = React.useState(false);
   const [animating, setAnimating] = React.useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [ledText, _setLedText] = React.useState(
+  const [ledText] = React.useState(
     "这是一个非常无聊但因为有趣的人而有趣起来的服务器"
   );
 
+  let register = () => {
+    document.getElementById("barcode")?.addEventListener("click", (e) => {
+      console.log(e.target);
+      navigator.clipboard.writeText("play.toiletmc.net");
+      toast.success("已复制服务器地址 :)");
+    });
+    register = () => {};
+  };
+
   useGSAP(() => {
+    register();
     // led滚动条动画
     gsap.fromTo(
       ledRef.current,
@@ -120,7 +120,10 @@ export default function App() {
   }
   function play() {
     // 防止打断
-    if (animating) return;
+    if (animating) {
+      toast.error("你急什么急，不知道做打断动画很麻烦的吗，还给我打断");
+      return;
+    }
     setAnimating(true);
     setLinksExpanded(false);
     setPlaying(true);
@@ -191,10 +194,14 @@ export default function App() {
     });
     setTimeout(() => {
       setAnimating(false);
-    }, 2000);
+    }, 1500);
   }
   function stop() {
     // 防止打断
+    if (animating) {
+      toast.error("你急什么急，不知道做打断动画很麻烦的吗，还给我打断");
+      return;
+    }
     if (animating) return;
     setAnimating(true);
     setPlaying(false);
@@ -265,7 +272,7 @@ export default function App() {
     });
     setTimeout(() => {
       setAnimating(false);
-    }, 2000);
+    }, 1000);
   }
 
   return (
@@ -488,7 +495,6 @@ export default function App() {
               href="https://wiki.toiletmc.net"
               css={css`
                 position: relative;
-                top: -30px;
               `}
             >
               <span
@@ -630,7 +636,6 @@ export default function App() {
           <img src={src} alt="bg" key={src} />
         ))}
       </div>
-      {/* <Toaster /> */}
     </div>
   );
 }
