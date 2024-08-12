@@ -451,7 +451,7 @@ export default function App() {
               width: 100%;
               display: flex;
               justify-content: center;
-              gap: 100px;
+              gap: 50px;
               transform: translateX(-100%);
               opacity: 0;
               transition: 0.3s;
@@ -459,7 +459,7 @@ export default function App() {
               bottom: -10px;
 
               &.expanded {
-                transform: translateX(0);
+                transform: translateX(40px);
                 opacity: 1;
               }
             `}
@@ -492,7 +492,7 @@ export default function App() {
             })}
           >
             <BottomLink
-              href="https://wiki.toiletmc.net"
+              href="#"
               css={css`
                 position: relative;
               `}
@@ -646,7 +646,7 @@ const BottomLink = styled.a`
   font-family: sans-serif;
   color: #5c75ec;
   vertical-align: baseline;
-  font-size: 150px;
+  font-size: 170px;
   /* letter-spacing: -0.08em; */
   font-family: "TestMartinaPlanijn";
 
