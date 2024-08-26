@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { images, descriptions } from "./images";
+import Sponsors from "./Sponsors";
 
 const maskPath = new URL("./assets/stg_danger_edited.svg", import.meta.url)
   .href;
@@ -550,6 +551,7 @@ export default function App() {
             <Right />
           </CornerButton>
         </section>
+        <Sponsors />
       </div>
       {/* led */}
       <section
