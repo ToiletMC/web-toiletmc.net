@@ -43,12 +43,6 @@ export default function App() {
 
   useGSAP(() => {
     register();
-    // led滚动条动画
-    gsap.fromTo(
-      ledRef.current,
-      { translateX: 0 },
-      { translateX: "-100%", repeat: -1, duration: 5, ease: "linear" }
-    );
   });
 
   function prevImage() {
@@ -565,6 +559,10 @@ export default function App() {
           background-color: #5c75ec;
           height: 64px;
           z-index: 1;
+
+          &:hover .led {
+            animation-play-state: paused;
+          }
         `}
         ref={ledBoxRef}
       >
@@ -581,8 +579,19 @@ export default function App() {
             position: absolute;
             top: 0;
             left: 0;
+            animation: scrollLed infinite 5s linear;
+
+            @keyframes scrollLed {
+              from {
+                transform: translateX(0);
+              }
+              to {
+                transform: translateX(-100%);
+              }
+            }
           `}
           ref={ledRef}
+          className="led"
         >
           <LEDText>{ledText}</LEDText>
           <LEDText>{ledText}</LEDText>
