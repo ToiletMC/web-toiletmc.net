@@ -26,7 +26,8 @@ if (isDesktop) {
 
 createRoot(rootEl).render(
   <StrictMode>
-    {isDesktop ? <App /> : <AppMobile />}
+    {/* {isDesktop ? <App /> : <AppMobile />} */}
+    <App />
     <Toaster />
   </StrictMode>
 );
