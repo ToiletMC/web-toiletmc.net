@@ -27,6 +27,7 @@ export default function Intro() {
     });
     gsap.to("#intro-logo", {
       x: -800,
+      color: isDark ? "#000" : undefined,
       cursor: "default",
       duration: 1,
     });
@@ -36,8 +37,8 @@ export default function Intro() {
       duration: 1,
     });
     gsap.to("#intro-text", {
-      opacity: isDark ? 0.5 : 1,
-      color: isDark ? "#ccc" : "#5c75ec",
+      opacity: 1,
+      color: "#5c75ec",
       pointerEvents: "auto",
       duration: 1,
       delay: 0.5,
@@ -55,19 +56,19 @@ export default function Intro() {
   React.useEffect(() => {
     console.log("navigate to", page);
     // 切换背景颜色
-    if (isDark) {
-      gsap.to("#intro-logo", {
-        color: page === -1 ? "#5268d4" : pages[page].color,
-        duration: 1.5,
-      });
-    } else {
-      gsap.to(document.body, {
-        backgroundColor: page === -1 ? "#5c75ec" : pages[page].color,
-        duration: 1.5,
-      });
-    }
+    // if (isDark) {
+    //   gsap.to("#intro-logo", {
+    //     color: page === -1 ? "#5268d4" : pages[page].color,
+    //     duration: 1.5,
+    //   });
+    // } else {
+    gsap.to(document.body, {
+      backgroundColor: page === -1 ? "#5c75ec" : pages[page].color,
+      duration: 1.5,
+    });
+    // }
     gsap.to("#intro-text", {
-      color: isDark ? "#ccc" : page === -1 ? "#5c75ec" : pages[page].color,
+      color: page === -1 ? "#5c75ec" : pages[page].color,
       duration: 1.5,
     });
   }, [page, isDark]);
@@ -97,10 +98,10 @@ export default function Intro() {
           cursor: pointer;
           color: #fff;
 
-          @media screen and (prefers-color-scheme: dark) {
+          /* @media screen and (prefers-color-scheme: dark) {
             color: #5268d4;
             opacity: 0.5;
-          }
+          } */
         `}
       ></Logo>
       {/* 页面内容 */}
