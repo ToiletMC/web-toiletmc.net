@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import CSSPlugin from "gsap/CSSPlugin";
 import { Toaster } from "react-hot-toast";
 import AppMobile from "./AppMobile.tsx";
+import { RecoilRoot } from "recoil";
 
 gsap.registerPlugin(useGSAP, CSSPlugin);
 
@@ -26,8 +27,10 @@ if (isDesktop) {
 
 createRoot(rootEl).render(
   <StrictMode>
-    {/* {isDesktop ? <App /> : <AppMobile />} */}
-    <App />
-    <Toaster />
+    <RecoilRoot>
+      {/* {isDesktop ? <App /> : <AppMobile />} */}
+      <App />
+      <Toaster />
+    </RecoilRoot>
   </StrictMode>
 );

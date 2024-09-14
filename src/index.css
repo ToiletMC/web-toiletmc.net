@@ -18,11 +18,25 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* @font-face {
-  font-family: "Chusung";
-  src: url("./assets/Chusung.woff2");
-} */
 @font-face {
-  font-family: "TestMartinaPlanijn";
-  src: url("./assets/TestMartinaPlantijn-Medium.otf");
+  font-family: "PPWriter";
+  src: url("./assets/PPWriter-RegularText.otf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "PPWriter";
+  src: url("./assets/PPWriter-RegularItalic.otf");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Miriam Libre";
+  src: url("./assets/MiriamLibre-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("./assets/JosefinSans-VariableFont_wght.ttf");
 }
