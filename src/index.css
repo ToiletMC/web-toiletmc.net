@@ -6,11 +6,6 @@ body {
   height: 100vh;
   background-color: #5c75ec;
 }
-@media screen and (prefers-color-scheme: dark) {
-  body {
-    background-color: #101318;
-  }
-}
 * {
   box-sizing: border-box;
   user-select: none;

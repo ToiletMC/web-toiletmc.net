@@ -173,9 +173,9 @@ function BigLink({
         position: relative;
         ${italic && "font-style: italic;"}
 
-        @media screen and (prefers-color-scheme: dark) {
+        /* @media screen and (prefers-color-scheme: dark) {
           color: ${darkColor};
-        }
+        } */
 
         &:hover {
           text-decoration: ${underline ? "underline" : "none"};
@@ -224,9 +224,9 @@ function BottomLink({
         text-decoration: none;
         line-height: 1;
 
-        @media screen and (prefers-color-scheme: dark) {
+        /* @media screen and (prefers-color-scheme: dark) {
           color: ${darkColor};
-        }
+        } */
 
         &:hover {
           text-decoration: underline;
