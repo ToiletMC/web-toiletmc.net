@@ -2,8 +2,8 @@ import { css } from "@emotion/react";
 import React from "react";
 import Danmaku from "rc-danmaku";
 
-// const API = "https://api.toiletmc.net/afdian/sponsors";
-const API = "http://localhost:3000";
+const API = "https://api.toiletmc.net/afdian/sponsors";
+// const API = "http://localhost:3000";
 
 // 弹幕层，显示爱发电的用户
 export default function Sponsors() {
@@ -17,20 +17,10 @@ export default function Sponsors() {
       minGapWidth: 30,
       rowHeight: 90,
     });
-    (async () => {
-      // 获取数据
-      const data: {
-        pages: number;
-        data: { name: string; amount: string }[];
-      } = await (await fetch(API)).json();
-      // 不加参数返回的是第一页的数据，所以先把第一页加到弹幕里面
-      add(data.data);
-      // 然后获取其他页的数据
-      for (let i = 1; i < data.pages; i++) {
-        const data = await (await fetch(`${API}?page=${i}`)).json();
-        add(data.data);
-      }
-    })();
+    // 获取数据
+    fetch(API)
+      .then((r) => r.json())
+      .then((data) => add(data.data));
   }, []);
 
   function add(data: { name: string; amount: string }[]) {
@@ -46,6 +36,8 @@ export default function Sponsors() {
             padding: 10px 15px;
             background-color: #fff;
             margin-top: 30px;
+            color: #000;
+            opacity: 0.5;
           `}
         >
           {item.name} 捐赠了 ￥{item.amount}

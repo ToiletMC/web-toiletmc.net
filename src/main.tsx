@@ -7,8 +7,8 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import CSSPlugin from "gsap/CSSPlugin";
 import { Toaster } from "react-hot-toast";
-import AppMobile from "./AppMobile.tsx";
 import { RecoilRoot } from "recoil";
+import "han-css/dist/han.min.css";
 
 gsap.registerPlugin(useGSAP, CSSPlugin);
 
