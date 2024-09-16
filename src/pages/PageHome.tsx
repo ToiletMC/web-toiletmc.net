@@ -3,7 +3,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { pageState } from "../states";
+import { pageAtom } from "../states";
 
 /**
  * 首页点进去以后显示的5个大号链接
@@ -23,22 +23,8 @@ export default function IntroLinks() {
         justify-content: center;
       `}
     >
-      <BigLink
-        color="#5cec79"
-        darkColor="#5cec79"
-        alt="维基"
-        href="https://wiki.toiletmc.net/"
-      >
-        Wiki
-      </BigLink>
       {pages.map((page, i) => (
-        <BigLink
-          key={i}
-          color={page.color}
-          darkColor={page.darkColor}
-          to={i}
-          alt={page.alt}
-        >
+        <BigLink key={i} color={page.color} to={i} alt={page.alt}>
           {page.name}
         </BigLink>
       ))}
@@ -47,13 +33,7 @@ export default function IntroLinks() {
           height: 3rem;
         `}
       ></div>
-      <BigLink
-        color="#5c75ec"
-        darkColor="#91a3ff"
-        onClick={copyAddress}
-        italic
-        underline={false}
-      >
+      <BigLink color="#5c75ec" onClick={copyAddress} italic underline={false}>
         play.toiletmc.net
       </BigLink>
       <div
@@ -74,57 +54,37 @@ export default function IntroLinks() {
         <BottomLink
           href="https://qm.qq.com/cgi-bin/qm/qr?k=tEmlRdjAcNJcCbPXCHwtzXJo6TFnnvNN&authKey=2v%2BpcqTvZ6h1xFKED7WhhCMdigwKfnN8XhcFsHjT6OQI81pdne9jbKiOYpztmWy3&noverify=0&group_code=720737548"
           color="#ec5c5c"
-          darkColor="#ff8f8f"
         >
           qq
         </BottomLink>
-        <BottomLink
-          href="https://toiletmc.net/bilibili"
-          color="#ec5c5c"
-          darkColor="#ff8f8f"
-        >
+        <BottomLink href="https://toiletmc.net/bilibili" color="#ec5c5c">
           bilibili
         </BottomLink>
-        <BottomLink
-          href="https://toiletmc.net/github"
-          color="#5cec91"
-          darkColor="#8fffbf"
-        >
+        <BottomLink href="https://toiletmc.net/github" color="#5cec91">
           github
         </BottomLink>
-        <BottomLink
-          href="https://toiletmc.net/gitee"
-          color="#5cec91"
-          darkColor="#8fffbf"
-        >
+        <BottomLink href="https://toiletmc.net/gitee" color="#5cec91">
           gitee
         </BottomLink>
         <BottomLink
           href="https://www.minebbs.com/threads/1-19-2.13656/"
           color="#eca95c"
-          darkColor="#ffd28f"
         >
           minebbs
         </BottomLink>
         <BottomLink
           href="https://play.mcmod.cn/sv20183361.html"
           color="#eca95c"
-          darkColor="#ffd28f"
         >
           mc百科
         </BottomLink>
         <BottomLink
           href="https://www.fansmc.com/server/426.html"
           color="#eca95c"
-          darkColor="#ffd28f"
         >
           找服网
         </BottomLink>
-        <BottomLink
-          href="https://toiletmc.net/afdian"
-          color="#9d5cec"
-          darkColor="#c78fff"
-        >
+        <BottomLink href="https://toiletmc.net/afdian" color="#9d5cec">
           爱发电
         </BottomLink>
       </div>
@@ -138,7 +98,6 @@ function BigLink({
   children,
   onClick = () => {},
   color,
-  darkColor = color,
   italic = false,
   alt = "",
   underline = true,
@@ -147,12 +106,11 @@ function BigLink({
   to?: number;
   onClick?: () => void;
   color: string;
-  darkColor?: string;
   italic?: boolean;
   alt?: string;
   underline?: boolean;
 }>) {
-  const [, setPage] = useRecoilState(pageState);
+  const [, setPage] = useRecoilState(pageAtom);
 
   const click = () => {
     setPage(to);
@@ -172,10 +130,6 @@ function BigLink({
         line-height: 1;
         position: relative;
         ${italic && "font-style: italic;"}
-
-        /* @media screen and (prefers-color-scheme: dark) {
-          color: ${darkColor};
-        } */
 
         &:hover {
           text-decoration: ${underline ? "underline" : "none"};
@@ -207,11 +161,9 @@ function BottomLink({
   href = "#",
   children,
   color,
-  darkColor = color,
 }: React.PropsWithChildren<{
   href?: string;
   color: string;
-  darkColor?: string;
 }>) {
   return (
     <a
@@ -223,10 +175,6 @@ function BottomLink({
         color: ${color};
         text-decoration: none;
         line-height: 1;
-
-        /* @media screen and (prefers-color-scheme: dark) {
-          color: ${darkColor};
-        } */
 
         &:hover {
           text-decoration: underline;

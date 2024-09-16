@@ -5,15 +5,17 @@ import gsap from "gsap";
 import PageHome from "../pages/PageHome";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { pageState } from "../states";
+import { pageAtom, prevNextAtom } from "../states";
+import PageFrame from "./PageFrame";
 
 /**
  * 显示在页面中心，从厕所的logo平滑过渡到页面内容
  */
 export default function Intro() {
-  const [page, setPage] = useRecoilState(pageState);
+  const [page, setPage] = useRecoilState(pageAtom);
   const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [opened, setOpened] = React.useState(false);
+  const [, setPrevNext] = useRecoilState(prevNextAtom);
 
   /** 点击logo的事件 */
   const handleLogoClick = () => {
@@ -31,7 +33,7 @@ export default function Intro() {
       cursor: "default",
       duration: 1,
     });
-    gsap.to("#intro-content", {
+    gsap.to(["#intro-content", "#beian"], {
       opacity: 1,
       pointerEvents: "auto",
       duration: 1,
@@ -55,6 +57,9 @@ export default function Intro() {
 
   React.useEffect(() => {
     console.log("navigate to", page);
+    if (page > -1 && !pages[page].prevNext) {
+      setPrevNext([]);
+    }
     // 切换背景颜色
     // if (isDark) {
     //   gsap.to("#intro-logo", {
@@ -71,7 +76,7 @@ export default function Intro() {
       color: page === -1 ? "#5c75ec" : pages[page].color,
       duration: 1.5,
     });
-  }, [page, isDark]);
+  }, [page, isDark, setPrevNext]);
 
   return (
     // 外层div用于限制logo放大的尺寸
@@ -82,6 +87,7 @@ export default function Intro() {
         inset: 1.625rem;
         border-radius: 2.875rem;
         overflow: hidden;
+        color: ${isDark ? "#fff" : "#000"};
       `}
     >
       {/* 显示logo */}
@@ -109,7 +115,8 @@ export default function Intro() {
         id="intro-content"
         css={css`
           position: absolute;
-          inset: 2.625rem;
+          /* inset: 2.625rem; */
+          inset: 0;
           pointer-events: none;
           opacity: 0;
           display: flex;
@@ -117,7 +124,11 @@ export default function Intro() {
           align-items: center;
         `}
       >
-        {page === -1 ? <PageHome /> : pages[page].component}
+        {page === -1 ? (
+          <PageHome />
+        ) : (
+          <PageFrame>{pages[page].component}</PageFrame>
+        )}
       </div>
       {/* 左侧竖向文字 */}
       <div
@@ -141,6 +152,41 @@ export default function Intro() {
         `}
       >
         ToileT Minecraft
+      </div>
+      {/* 备案信息 */}
+      <div
+        id="beian"
+        css={css`
+          position: fixed;
+          bottom: 4rem;
+          right: 0.25rem;
+          font-size: 0.8rem;
+          writing-mode: vertical-lr;
+          display: flex;
+          gap: 1rem;
+          opacity: 0;
+          pointer-events: none;
+
+          a {
+            text-decoration: none;
+            color: #fff;
+          }
+        `}
+      >
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33011302000137"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          浙公网安备33011302000137号
+        </a>
+        <a
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          浙ICP备2021038660号-4
+        </a>
       </div>
     </div>
   );
