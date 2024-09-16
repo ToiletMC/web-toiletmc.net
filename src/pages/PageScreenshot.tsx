@@ -7,7 +7,7 @@ import { prevNextAtom } from "../states";
 
 export default function PageScreenshot() {
   const [curImage, setCurImage] = React.useState(0);
-  const [prevImage, setPrevImage] = React.useState(0);
+  const [, setPrevImage] = React.useState(0);
   const [, setPrevNext] = useRecoilState(prevNextAtom);
   const carousel = React.useRef<HTMLDivElement>(null);
   const description = React.useRef<HTMLDivElement>(null);

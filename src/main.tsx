@@ -14,16 +14,16 @@ gsap.registerPlugin(useGSAP, CSSPlugin);
 
 const rootEl = document.getElementById("root")!;
 
-const isDesktop = innerWidth / innerHeight > 1512 / 982;
-if (isDesktop) {
-  // desktop
-  rootEl.attributeStyleMap.set("aspect-ratio", "1512/982");
-  rootEl.style.height = "100vh";
-} else {
-  // mobile
-  rootEl.attributeStyleMap.set("aspect-ratio", "393/852");
-  rootEl.style.width = "100vw";
-}
+// const isDesktop = innerWidth / innerHeight > 1512 / 982;
+// if (isDesktop) {
+//   // desktop
+//   rootEl.attributeStyleMap.set("aspect-ratio", "1512/982");
+//   rootEl.style.height = "100vh";
+// } else {
+//   // mobile
+//   rootEl.attributeStyleMap.set("aspect-ratio", "393/852");
+//   rootEl.style.width = "100vw";
+// }
 
 createRoot(rootEl).render(
   <StrictMode>
