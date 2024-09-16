@@ -1,5 +1,9 @@
 import { atom } from "recoil";
 
+export const isMobile = navigator.userAgent.match(
+  /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+);
+
 export const pageAtom = atom({
   key: "pageState",
   default: -1,

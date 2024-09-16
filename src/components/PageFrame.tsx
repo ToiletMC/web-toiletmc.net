@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { pageAtom, prevNextAtom } from "../states";
+import { isMobile, pageAtom, prevNextAtom } from "../states";
 import { pages } from "../pages";
 
 export default function PageFrame({ children }: React.PropsWithChildren) {
@@ -12,13 +12,19 @@ export default function PageFrame({ children }: React.PropsWithChildren) {
     <div
       css={css`
         --primary: ${pages[page].color};
+        ${isMobile
+          ? `
+        padding: 1rem;
+        `
+          : `
         padding-left: 25%;
         padding-top: 4rem;
+        padding-right: 40%;
+        margin-right: 4rem;
+        `}
         width: 100%;
         height: 100%;
         color: ${pages[page].color};
-        padding-right: 40%;
-        margin-right: 4rem;
         font-size: 2rem;
         overflow-y: auto;
 

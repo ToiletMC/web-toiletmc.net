@@ -5,7 +5,7 @@ import gsap from "gsap";
 import PageHome from "../pages/PageHome";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { pageAtom, prevNextAtom } from "../states";
+import { isMobile, pageAtom, prevNextAtom } from "../states";
 import PageFrame from "./PageFrame";
 
 /**
@@ -46,13 +46,17 @@ export default function Intro() {
       delay: 0.5,
     });
     // .big-link元素，从右往左进入，要回弹效果
-    gsap.from(".big-link", {
-      x: "50vw",
-      opacity: 0,
-      duration: 1,
-      ease: "back.out",
-      stagger: 0.2,
-    });
+    gsap
+      .from(".big-link", {
+        x: "50vw",
+        opacity: 0,
+        duration: 1,
+        ease: "back.out",
+        stagger: 0.2,
+      })
+      .then(() => {
+        // document.querySelector(".big-link")?.setAttribute("style", "");
+      });
   };
 
   React.useEffect(() => {
@@ -84,8 +88,8 @@ export default function Intro() {
       id="intro"
       css={css`
         position: absolute;
-        inset: 1.625rem;
-        border-radius: 2.875rem;
+        inset: ${isMobile ? "0.5rem" : "1.625rem"};
+        border-radius: ${isMobile ? "1.5rem" : "2.875rem"};
         overflow: hidden;
         color: ${isDark ? "#fff" : "#000"};
       `}
@@ -122,6 +126,7 @@ export default function Intro() {
           display: flex;
           flex-direction: column;
           align-items: center;
+          /* overflow: auto; */
         `}
       >
         {page === -1 ? (
@@ -132,37 +137,55 @@ export default function Intro() {
           <PageFrame>{pages[page].component}</PageFrame>
         )}
       </div>
-      {/* 左侧竖向文字 */}
-      <div
-        id="intro-text"
-        onClick={() => setPage(-1)}
-        css={css`
-          position: absolute;
-          top: 50%;
-          left: 0;
-          transform: translateY(-50%);
-          cursor: pointer;
-          writing-mode: vertical-lr;
-          white-space: nowrap;
-          font-family: "Josefin Sans";
-          font-weight: 100;
-          letter-spacing: -0.07em;
-          font-size: 9.25rem;
-          pointer-events: none;
-          opacity: 0;
-          line-height: 0.5;
-        `}
-      >
-        ToileT Minecraft
-      </div>
+      {/* 左侧竖向文字 or 移动端大logo */}
+      {isMobile ? (
+        <Logo
+          id="intro-text"
+          onClick={() => setPage(-1)}
+          css={css`
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30vw;
+            height: 30vw;
+            cursor: pointer;
+            pointer-events: none;
+            opacity: 0;
+          `}
+        ></Logo>
+      ) : (
+        <div
+          id="intro-text"
+          onClick={() => setPage(-1)}
+          css={css`
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            writing-mode: vertical-lr;
+            font-size: 9.25rem;
+            font-weight: 100;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: "Josefin Sans";
+            letter-spacing: -0.07em;
+            pointer-events: none;
+            opacity: 0;
+            line-height: 0.5;
+          `}
+        >
+          ToileT Minecraft
+        </div>
+      )}
       {/* 备案信息 */}
       <div
         id="beian"
         css={css`
           position: fixed;
           bottom: 4rem;
-          right: 0.25rem;
-          font-size: 0.8rem;
+          right: ${isMobile ? "0rem" : "0.25rem"};
+          font-size: ${isMobile ? "0.4rem" : "0.8rem"};
           writing-mode: vertical-lr;
           display: flex;
           gap: 1rem;

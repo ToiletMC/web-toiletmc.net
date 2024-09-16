@@ -3,7 +3,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { pageAtom } from "../states";
+import { isMobile, pageAtom } from "../states";
 
 /**
  * 首页点进去以后显示的5个大号链接
@@ -20,7 +20,14 @@ export default function IntroLinks() {
         display: flex;
         flex-direction: column;
         height: 100%;
+        ${isMobile
+          ? `
+        margin-top: 10rem;
+        align-items: center;
+        `
+          : `
         justify-content: center;
+        `}
       `}
     >
       {pages.map((page, i) => (
@@ -44,6 +51,8 @@ export default function IntroLinks() {
       <div
         css={css`
           display: flex;
+          /* max-width: 100vw; */
+          flex-wrap: wrap;
 
           > :not(:last-child)::after {
             content: "·";
@@ -93,7 +102,7 @@ export default function IntroLinks() {
 }
 
 function BigLink({
-  href = "#",
+  href,
   to = -1,
   children,
   onClick = () => {},
@@ -113,6 +122,10 @@ function BigLink({
   const [, setPage] = useRecoilState(pageAtom);
 
   const click = () => {
+    if (isMobile && to === 0) {
+      window.location.href = "https://wiki.toiletmc.net";
+      return;
+    }
     setPage(to);
     onClick();
   };
@@ -123,18 +136,20 @@ function BigLink({
       href={href}
       onClick={click}
       css={css`
-        font-size: 5.5rem;
+        font-size: ${isMobile ? "3rem" : "5.5rem"};
         font-family: "PPWriter";
         color: ${color};
         text-decoration: none;
         line-height: 1;
         position: relative;
+        transition: 0.2s;
         ${italic && "font-style: italic;"}
 
         &:hover {
           text-decoration: ${underline ? "underline" : "none"};
           text-decoration-thickness: 0.5rem;
           text-underline-offset: 0.625rem;
+          opacity: 0.8;
         }
 
         &::before {
@@ -158,7 +173,7 @@ function BigLink({
 }
 
 function BottomLink({
-  href = "#",
+  href,
   children,
   color,
 }: React.PropsWithChildren<{
