@@ -126,6 +126,8 @@ export default function Intro() {
       >
         {page === -1 ? (
           <PageHome />
+        ) : page === 0 ? (
+          pages[page].component
         ) : (
           <PageFrame>{pages[page].component}</PageFrame>
         )}
