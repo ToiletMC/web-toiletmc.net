@@ -46,17 +46,13 @@ export default function Intro() {
       delay: 0.5,
     });
     // .big-link元素，从右往左进入，要回弹效果
-    gsap
-      .from(".big-link", {
-        x: "50vw",
-        opacity: 0,
-        duration: 1,
-        ease: "back.out",
-        stagger: 0.2,
-      })
-      .then(() => {
-        // document.querySelector(".big-link")?.setAttribute("style", "");
-      });
+    gsap.from(".big-link", {
+      x: "50vw",
+      opacity: 0,
+      duration: 1,
+      ease: "back.out",
+      stagger: 0.2,
+    });
   };
 
   React.useEffect(() => {

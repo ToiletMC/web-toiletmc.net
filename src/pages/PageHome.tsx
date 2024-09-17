@@ -142,14 +142,12 @@ function BigLink({
         text-decoration: none;
         line-height: 1;
         position: relative;
-        transition: 0.2s;
         ${italic && "font-style: italic;"}
 
         &:hover {
           text-decoration: ${underline ? "underline" : "none"};
           text-decoration-thickness: 0.5rem;
           text-underline-offset: 0.625rem;
-          opacity: 0.8;
         }
 
         &::before {
