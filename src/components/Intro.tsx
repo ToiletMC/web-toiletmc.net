@@ -51,7 +51,7 @@ export default function Intro() {
       opacity: 0,
       duration: 1,
       ease: "back.out",
-      stagger: 0.2,
+      stagger: 0.1,
     });
   };
 
