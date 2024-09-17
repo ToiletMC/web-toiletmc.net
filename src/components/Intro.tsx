@@ -140,7 +140,7 @@ export default function Intro() {
           onClick={() => setPage(-1)}
           css={css`
             position: absolute;
-            top: 15%;
+            top: 4rem;
             left: 50%;
             transform: translateX(-50%);
             width: 30vw;
