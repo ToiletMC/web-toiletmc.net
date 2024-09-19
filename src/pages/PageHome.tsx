@@ -31,11 +31,14 @@ export default function IntroLinks() {
         `}
       `}
     >
-      {pages.map((page, i) => (
-        <BigLink key={i} color={page.color} to={i} alt={page.alt}>
-          {page.name}
-        </BigLink>
-      ))}
+      {pages.map(
+        (page, i) =>
+          !page.hidden && (
+            <BigLink key={i} color={page.color} to={i} alt={page.alt}>
+              {page.name}
+            </BigLink>
+          )
+      )}
       <div
         css={css`
           height: ${isMobile ? "1.5rem" : "3rem"};

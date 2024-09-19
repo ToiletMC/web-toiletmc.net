@@ -12,3 +12,7 @@ export const prevNextAtom = atom<[() => void, () => void] | []>({
   key: "prevNextState",
   default: [],
 });
+export const hookAtom = atom({
+  key: "hookState",
+  default: "",
+});

@@ -5,7 +5,7 @@ import gsap from "gsap";
 import PageHome from "../pages/PageHome";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { isMobile, pageAtom, prevNextAtom } from "../states";
+import { hookAtom, isMobile, pageAtom, prevNextAtom } from "../states";
 import PageFrame from "./PageFrame";
 
 /**
@@ -16,9 +16,10 @@ export default function Intro() {
   const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [opened, setOpened] = React.useState(false);
   const [, setPrevNext] = useRecoilState(prevNextAtom);
+  const [, setHook] = useRecoilState(hookAtom);
 
   /** 点击logo的事件 */
-  const handleLogoClick = () => {
+  const handleLogoClick = React.useCallback(() => {
     setOpened(true);
     if (opened) return;
     gsap.to("#intro-logo", {
@@ -53,10 +54,11 @@ export default function Intro() {
       ease: "back.out",
       stagger: 0.1,
     });
-  };
+  }, [isDark, opened]);
 
   React.useEffect(() => {
     console.log("navigate to", page);
+    window.location.hash = page === -1 ? "" : page.toString();
     if (page > -1 && !pages[page].prevNext) {
       setPrevNext([]);
     }
@@ -77,6 +79,26 @@ export default function Intro() {
       duration: 1.5,
     });
   }, [page, isDark, setPrevNext]);
+
+  const detectHash = () => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const match = hash.match(/^hook:(.+)$/);
+      if (match) {
+        const [, name] = match;
+        setHook(name);
+        setPage(4);
+        if (!opened) {
+          handleLogoClick();
+        }
+      }
+    } else {
+      setPage(hash === "" ? -1 : parseInt(hash));
+    }
+  };
+
+  React.useEffect(detectHash, [handleLogoClick, opened, setHook, setPage]);
+  window.addEventListener("hashchange", detectHash);
 
   return (
     // 外层div用于限制logo放大的尺寸

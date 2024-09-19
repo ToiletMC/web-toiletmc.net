@@ -9,8 +9,10 @@ import CSSPlugin from "gsap/CSSPlugin";
 import { Toaster } from "react-hot-toast";
 import { RecoilRoot } from "recoil";
 import "han-css/dist/han.min.css";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
 
-gsap.registerPlugin(useGSAP, CSSPlugin);
+gsap.registerPlugin(useGSAP, CSSPlugin, ScrollTrigger, ScrollToPlugin);
 
 const rootEl = document.getElementById("root")!;
 

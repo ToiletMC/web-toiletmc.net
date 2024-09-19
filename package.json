@@ -17,7 +17,6 @@
     "clsx": "^2.1.1",
     "gsap": "^3.12.5",
     "lodash": "^4.17.21",
-    "rc-danmaku": "1.2.0-alpha.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
