@@ -5,14 +5,21 @@ import "./index.css";
 import "@fontsource/libre-barcode-128-text";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import CSSPlugin from "gsap/CSSPlugin";
 import { Toaster } from "react-hot-toast";
 import { RecoilRoot } from "recoil";
 import "han-css/dist/han.min.css";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { CustomEase } from "gsap/CustomEase";
+import CSSPlugin from "gsap/CSSPlugin";
 
-gsap.registerPlugin(useGSAP, CSSPlugin, ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(
+  useGSAP,
+  CSSPlugin,
+  ScrollTrigger,
+  ScrollToPlugin,
+  CustomEase
+);
 
 const rootEl = document.getElementById("root")!;
 

@@ -9,14 +9,14 @@ import { useRecoilState } from "recoil";
 import { hookAtom, pageAtom } from "../states";
 
 export default function PageHook() {
+  const [, setPage] = useRecoilState(pageAtom);
+  const [hook] = useRecoilState(hookAtom);
   const [form, setForm] = React.useState({
-    hook: "",
+    hook,
     parameter: "",
     player: "",
     files: [] as File[],
   });
-  const [, setPage] = useRecoilState(pageAtom);
-  const [hook] = useRecoilState(hookAtom);
 
   const submit = () => {
     // 验证参数
@@ -55,8 +55,8 @@ export default function PageHook() {
       >
         <Select
           label="项目选择"
-          defaultValue={hook}
           options={["绿色联盟", "假人放置", "建筑审核"]}
+          value={form.hook}
           onChange={(e) => {
             setForm((prev) => ({ ...prev, hook: e }));
           }}
@@ -64,19 +64,23 @@ export default function PageHook() {
         <Select
           label="参数选择"
           options={["?"]}
+          value={form.parameter}
           onChange={(e) => {
             setForm((prev) => ({ ...prev, parameter: e }));
           }}
         />
         <Input
           placeholder="游戏 ID"
+          value={form.player}
           onChange={(e) => {
             setForm((prev) => ({ ...prev, player: e }));
           }}
         />
         <FileSelector
           label="附件上传 (可选)"
+          value={form.files}
           onChange={(e) => {
+            console.log(e);
             setForm((prev) => ({ ...prev, files: e }));
           }}
         />

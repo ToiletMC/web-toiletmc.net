@@ -1,19 +1,14 @@
 import { css } from "@emotion/react";
-import React from "react";
 
 export default function Input({
-  defaultValue = "",
+  value = "",
   onChange = () => {},
   placeholder = "",
 }: {
-  defaultValue?: string;
+  value?: string;
   onChange?: (e: string) => void;
   placeholder?: string;
 }) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  };
-
   return (
     <input
       css={css`
@@ -33,8 +28,8 @@ export default function Input({
         }
       `}
       type="text"
-      defaultValue={defaultValue}
-      onChange={handleChange}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       autoComplete="off"
     />

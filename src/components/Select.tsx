@@ -5,12 +5,12 @@ import React from "react";
 export default function Select({
   options,
   label,
-  defaultValue = "",
+  value = "",
   onChange = () => {},
 }: {
   options: string[];
   label: string;
-  defaultValue?: string;
+  value?: string;
   onChange?: (option: string) => void;
 }) {
   const [expanded, setExpanded] = React.useState(false);
@@ -18,7 +18,6 @@ export default function Select({
   const button = React.useRef<HTMLButtonElement>(null);
   const [buttonWidth, setButtonWidth] = React.useState(0);
   const [buttonHeight, setButtonHeight] = React.useState(0);
-  const [selectedOption, setSelectedOption] = React.useState("");
   const [menuPosition, setMenuPosition] = React.useState({
     top: 0,
     left: 0,
@@ -71,13 +70,6 @@ export default function Select({
     };
   }, [onClickOutside]);
 
-  React.useEffect(() => {
-    if (defaultValue) {
-      setSelectedOption(defaultValue);
-      onChange(defaultValue);
-    }
-  }, [defaultValue, onChange]);
-
   return (
     <>
       <button
@@ -111,7 +103,7 @@ export default function Select({
         `}
         ref={button}
       >
-        {selectedOption || label}
+        {value || label}
       </button>
       <div
         ref={menu}
@@ -155,7 +147,6 @@ export default function Select({
               key={option}
               onClick={() => {
                 setExpanded(false);
-                setSelectedOption(option);
                 onChange(option);
               }}
               onMouseDown={(event) => {
@@ -171,8 +162,7 @@ export default function Select({
                 padding-top: 0.5rem;
                 padding-bottom: 0.5rem;
                 border-radius: 1rem;
-                ${selectedOption === option &&
-                `background-color: var(--hover);`}
+                ${value === option && `background-color: var(--hover);`}
 
                 &::before {
                   content: "·";

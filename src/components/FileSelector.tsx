@@ -1,21 +1,17 @@
 import { css } from "@emotion/react";
 import PlusIcon from "../assets/plus.svg?react";
 import PlusNoBgIconUrl from "../assets/plus_no_bg.svg?url";
-import React from "react";
 import toast from "react-hot-toast";
 
 export default function FileSelector({
   label = "附件上传",
+  value = [],
   onChange = () => {},
 }: {
   label?: string;
+  value?: File[];
   onChange?: (files: File[]) => void;
 }) {
-  const [files, setFiles] = React.useState<File[]>([]);
-  const fileUrls = React.useMemo(() => {
-    return files.map((file) => URL.createObjectURL(file));
-  }, [files]);
-
   const selectFile = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -23,17 +19,12 @@ export default function FileSelector({
     input.multiple = true;
     input.addEventListener("change", () => {
       const selectedFiles = input.files;
-      [...selectedFiles!].forEach((file) => {
-        setFiles((prev) => {
-          if (prev.length >= 5) {
-            toast.error("最多只能上传5张图片");
-            return prev;
-          }
-          return [...prev, file];
-        });
-      });
+      if (value.length + selectedFiles!.length > 5) {
+        toast.error("最多只能上传 5 张图片");
+        return;
+      }
+      onChange([...value, ...selectedFiles!]);
       input.remove();
-      onChange(files);
     });
     input.click();
   };
@@ -77,9 +68,9 @@ export default function FileSelector({
           }
         `}
       >
-        {files.map((file, i) => (
+        {value.map((file, i) => (
           <div
-            key={file.name}
+            key={i}
             css={css`
               flex-shrink: 0;
               display: flex;
@@ -90,13 +81,13 @@ export default function FileSelector({
           >
             <div
               onClick={() => {
-                setFiles((prev) => prev.filter((f) => f.name !== file.name));
+                onChange(value.filter((f) => f.name !== file.name));
               }}
               css={css`
                 width: 8rem;
                 height: 8rem;
                 border-radius: 1rem;
-                background-image: url("${fileUrls[i]}");
+                background-image: url("${URL.createObjectURL(file)}");
                 background-size: cover;
                 position: relative;
                 overflow: hidden;

@@ -80,8 +80,9 @@ export default function Intro() {
     });
   }, [page, isDark, setPrevNext]);
 
-  const detectHash = () => {
+  const detectHash = React.useCallback(() => {
     const hash = decodeURIComponent(window.location.hash.slice(1));
+    console.log("hash", hash);
     if (hash) {
       const match = hash.match(/^4:(.+)$/);
       if (match) {
@@ -91,14 +92,20 @@ export default function Intro() {
         if (!opened) {
           handleLogoClick();
         }
+      } else {
+        setPage(hash === "" ? -1 : parseInt(hash));
       }
-    } else {
-      setPage(hash === "" ? -1 : parseInt(hash));
     }
-  };
+  }, [handleLogoClick, opened, setHook, setPage]);
 
-  React.useEffect(detectHash, [handleLogoClick, opened, setHook, setPage]);
-  window.addEventListener("hashchange", detectHash);
+  React.useEffect(detectHash, [detectHash]);
+  React.useEffect(() => {
+    window.addEventListener("hashchange", detectHash);
+
+    return () => {
+      window.removeEventListener("hashchange", detectHash);
+    };
+  }, [detectHash]);
 
   return (
     // 外层div用于限制logo放大的尺寸
