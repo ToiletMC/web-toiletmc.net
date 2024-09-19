@@ -6,7 +6,7 @@ import SubmitIcon from "../assets/submit.svg?react";
 import React from "react";
 import toast from "react-hot-toast";
 import { useRecoilState } from "recoil";
-import { pageAtom } from "../states";
+import { hookAtom, pageAtom } from "../states";
 
 export default function PageHook() {
   const [form, setForm] = React.useState({
@@ -16,6 +16,7 @@ export default function PageHook() {
     files: [] as File[],
   });
   const [, setPage] = useRecoilState(pageAtom);
+  const [hook] = useRecoilState(hookAtom);
 
   const submit = () => {
     // 验证参数
@@ -54,6 +55,7 @@ export default function PageHook() {
       >
         <Select
           label="项目选择"
+          defaultValue={hook}
           options={["绿色联盟", "假人放置", "建筑审核"]}
           onChange={(e) => {
             setForm((prev) => ({ ...prev, hook: e }));

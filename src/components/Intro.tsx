@@ -81,9 +81,9 @@ export default function Intro() {
   }, [page, isDark, setPrevNext]);
 
   const detectHash = () => {
-    const hash = window.location.hash.slice(1);
+    const hash = decodeURIComponent(window.location.hash.slice(1));
     if (hash) {
-      const match = hash.match(/^hook:(.+)$/);
+      const match = hash.match(/^4:(.+)$/);
       if (match) {
         const [, name] = match;
         setHook(name);

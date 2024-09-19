@@ -5,10 +5,12 @@ import React from "react";
 export default function Select({
   options,
   label,
+  defaultValue = "",
   onChange = () => {},
 }: {
   options: string[];
   label: string;
+  defaultValue?: string;
   onChange?: (option: string) => void;
 }) {
   const [expanded, setExpanded] = React.useState(false);
@@ -68,6 +70,13 @@ export default function Select({
       document.removeEventListener("mousedown", onClickOutside);
     };
   }, [onClickOutside]);
+
+  React.useEffect(() => {
+    if (defaultValue) {
+      setSelectedOption(defaultValue);
+      onChange(defaultValue);
+    }
+  }, [defaultValue, onChange]);
 
   return (
     <>
