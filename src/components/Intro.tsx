@@ -56,9 +56,28 @@ export default function Intro() {
     });
   }, [isDark, opened]);
 
+  const detectHash = React.useCallback(() => {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    console.log("hash", hash);
+    if (hash) {
+      const match = hash.match(/^4:(.+)$/);
+      if (match) {
+        const [, name] = match;
+        setHook(name);
+        setPage(4);
+        if (!opened) {
+          handleLogoClick();
+        }
+      } else {
+        setPage(hash === "" ? -1 : parseInt(hash));
+        window.location.hash = page === -1 ? "" : page.toString();
+      }
+    }
+  }, [handleLogoClick, opened, page, setHook, setPage]);
+
   React.useEffect(() => {
     console.log("navigate to", page);
-    window.location.hash = page === -1 ? "" : page.toString();
+    detectHash();
     if (page > -1 && !pages[page].prevNext) {
       setPrevNext([]);
     }
@@ -78,27 +97,8 @@ export default function Intro() {
       color: page === -1 ? "#5c75ec" : pages[page].color,
       duration: 1.5,
     });
-  }, [page, isDark, setPrevNext]);
+  }, [page, isDark, setPrevNext, detectHash]);
 
-  const detectHash = React.useCallback(() => {
-    const hash = decodeURIComponent(window.location.hash.slice(1));
-    console.log("hash", hash);
-    if (hash) {
-      const match = hash.match(/^4:(.+)$/);
-      if (match) {
-        const [, name] = match;
-        setHook(name);
-        setPage(4);
-        if (!opened) {
-          handleLogoClick();
-        }
-      } else {
-        setPage(hash === "" ? -1 : parseInt(hash));
-      }
-    }
-  }, [handleLogoClick, opened, setHook, setPage]);
-
-  React.useEffect(detectHash, [detectHash]);
   React.useEffect(() => {
     window.addEventListener("hashchange", detectHash);
 
