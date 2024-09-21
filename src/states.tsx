@@ -18,5 +18,5 @@ export const hookAtom = atom({
 });
 export const isDarkAtom = atom({
   key: "isDarkState",
-  default: false,
+  default: localStorage.getItem("isDark") === "true" || false,
 });

@@ -24,6 +24,7 @@ export default function IntroLinks() {
     if (animating) return;
     setAnimating(true);
     setIsDark(!isDark);
+    localStorage.setItem("isDark", JSON.stringify(isDark));
     const mousePos = { x: event.clientX, y: event.clientY };
     const introPos = document.getElementById("intro")!.getBoundingClientRect();
     gsap.set("#switch-theme-ripple", {

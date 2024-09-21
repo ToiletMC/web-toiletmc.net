@@ -36,6 +36,7 @@ export default function Intro() {
     });
     gsap.to("#intro-logo", {
       x: -800,
+      color: isDark ? "#000" : "#fff",
       cursor: "default",
       duration: 1,
     });
@@ -59,7 +60,7 @@ export default function Intro() {
       ease: "back.out",
       stagger: 0.1,
     });
-  }, [opened]);
+  }, [isDark, opened]);
 
   const updatePageByHash = React.useCallback(() => {
     console.log("update page by hash");
@@ -147,7 +148,13 @@ export default function Intro() {
           color: #fff;
         `}
       ></Logo>
-      <div id="switch-theme-ripple"></div>
+      <div
+        id="switch-theme-ripple"
+        css={css`
+          opacity: 0;
+          pointer-events: none;
+        `}
+      ></div>
       {/* 页面内容 */}
       <div
         id="intro-content"
