@@ -64,6 +64,20 @@ export default function Intro() {
 
   const updatePageByHash = React.useCallback(() => {
     const hash = decodeURIComponent(window.location.hash.slice(1));
+    if (hash) {
+      console.log("hash:", hash);
+      const match = hash.match(/^hook:(.+)$/);
+      if (match) {
+        console.log("navigate to hook");
+        const [, name] = match;
+        setHook(name);
+        if (!opened) {
+          handleLogoClick();
+        }
+        setPage(4);
+        return;
+      }
+    }
     console.log("update page by hash", hash);
     if (!hash) {
       setPage(-1);
@@ -107,23 +121,6 @@ export default function Intro() {
       window.removeEventListener("hashchange", updatePageByHash);
     };
   }, [updatePageByHash]);
-
-  React.useEffect(() => {
-    const hash = decodeURIComponent(window.location.hash.slice(1));
-    if (hash) {
-      console.log("hash:", hash);
-      const match = hash.match(/^hook:(.+)$/);
-      if (match) {
-        console.log("navigate to hook");
-        const [, name] = match;
-        setHook(name);
-        if (!opened) {
-          handleLogoClick();
-        }
-        setPage(4);
-      }
-    }
-  }, [handleLogoClick, opened, setHook, setPage]);
 
   return (
     // 外层div用于限制logo放大的尺寸
