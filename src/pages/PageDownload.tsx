@@ -1,9 +1,11 @@
 import { css } from "@emotion/react";
+import FileIcon from "../assets/icons/file.svg?react";
+import ZipIcon from "../assets/icons/zip.svg?react";
 
 const files = [
   {
-    name: "file.zip",
-    url: "https://example.com/file.zip",
+    name: "厕所资源包【1.20-1.21.1】.zip",
+    url: "https://www.toiletmc.net/files/resource-pack.zip",
   },
 ];
 
@@ -15,6 +17,7 @@ export default function PageDownload() {
           key={file.url}
           href={file.url}
           download={file.name}
+          title={file.url}
           css={css`
             display: block;
             margin-top: 2rem;
@@ -28,6 +31,9 @@ export default function PageDownload() {
             font-weight: bold;
             text-decoration: none;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
 
             &::before {
               content: "";
@@ -45,6 +51,7 @@ export default function PageDownload() {
             }
           `}
         >
+          {file.name.endsWith(".zip") ? <ZipIcon /> : <FileIcon />}
           {file.name}
         </a>
       ))}

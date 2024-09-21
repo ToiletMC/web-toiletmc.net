@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import Select from "../components/Select";
 import Input from "../components/Input";
 import FileSelector from "../components/FileSelector";
-import SubmitIcon from "../assets/submit.svg?react";
+import SubmitIcon from "../assets/icons/submit.svg?react";
 import React from "react";
 import toast from "react-hot-toast";
 import { useRecoilState } from "recoil";

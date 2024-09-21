@@ -5,7 +5,7 @@ import { pages } from "../pages";
 import { useRecoilState } from "recoil";
 import { isDarkAtom, isMobile, pageAtom } from "../states";
 import BottomLinks from "../components/BottomLinks";
-import SwitchThemeIcon from "../assets/switch_theme.svg?react";
+import SwitchThemeIcon from "../assets/icons/switch_theme.svg?react";
 import gsap from "gsap";
 
 /**

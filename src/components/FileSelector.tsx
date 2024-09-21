@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
-import PlusIcon from "../assets/plus.svg?react";
-import PlusNoBgIconUrl from "../assets/plus_no_bg.svg?url";
+import PlusIcon from "../assets/icons/plus.svg?react";
+import PlusNoBgIconUrl from "../assets/icons/plus_no_bg.svg?url";
 import toast from "react-hot-toast";
 
 export default function FileSelector({

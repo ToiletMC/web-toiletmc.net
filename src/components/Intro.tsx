@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import React from "react";
-import Logo from "../assets/logo.svg?react";
+import Logo from "../assets/icons/logo.svg?react";
 import gsap from "gsap";
 import PageHome from "../pages/PageHome";
 import { pages } from "../pages";
@@ -63,12 +63,16 @@ export default function Intro() {
   }, [isDark, opened]);
 
   const updatePageByHash = React.useCallback(() => {
-    console.log("update page by hash");
     const hash = decodeURIComponent(window.location.hash.slice(1));
+    console.log("update page by hash", hash);
+    if (!hash) {
+      setPage(-1);
+      return;
+    }
     if (!parseInt(hash)) {
       return;
     }
-    setPage(hash === "" ? -1 : parseInt(hash));
+    setPage(parseInt(hash));
   }, [setPage]);
 
   React.useEffect(() => {
@@ -148,13 +152,7 @@ export default function Intro() {
           color: #fff;
         `}
       ></Logo>
-      <div
-        id="switch-theme-ripple"
-        css={css`
-          opacity: 0;
-          pointer-events: none;
-        `}
-      ></div>
+      <div id="switch-theme-ripple"></div>
       {/* 页面内容 */}
       <div
         id="intro-content"

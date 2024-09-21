@@ -15,23 +15,23 @@ body {
 
 @font-face {
   font-family: "PPWriter";
-  src: url("./assets/PPWriter-RegularText.otf");
+  src: url("./assets/fonts/PPWriter-RegularText.otf");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "PPWriter";
-  src: url("./assets/PPWriter-RegularItalic.otf");
+  src: url("./assets/fonts/PPWriter-RegularItalic.otf");
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
   font-family: "Miriam Libre";
-  src: url("./assets/MiriamLibre-Bold.ttf");
+  src: url("./assets/fonts/MiriamLibre-Bold.ttf");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: "Josefin Sans";
-  src: url("./assets/JosefinSans-VariableFont_wght.ttf");
+  src: url("./assets/fonts/JosefinSans-VariableFont_wght.ttf");
 }
