@@ -39,12 +39,8 @@ export default function FileSelector({
         text-align: left;
         border: 5px solid var(--primary);
         padding: 1rem 1.5rem;
-        background-color: #fff;
+        background-color: var(--bg);
         color: var(--primary);
-
-        @media screen and (prefers-color-scheme: dark) {
-          background-color: #000;
-        }
       `}
     >
       <span>{label}</span>

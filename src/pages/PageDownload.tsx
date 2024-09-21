@@ -21,17 +21,13 @@ export default function PageDownload() {
             width: 100%;
             padding: 0.5rem 1.25rem;
             background-color: var(--primary);
-            color: #fff;
+            color: var(--bg);
             border-radius: 1.25rem;
             position: relative;
             font-family: "PPWriter";
             font-weight: bold;
             text-decoration: none;
             transition: 0.2s;
-
-            @media screen and (prefers-color-scheme: dark) {
-              color: #000;
-            }
 
             &::before {
               content: "";

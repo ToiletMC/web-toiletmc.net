@@ -16,3 +16,7 @@ export const hookAtom = atom({
   key: "hookState",
   default: "",
 });
+export const isDarkAtom = atom({
+  key: "isDarkState",
+  default: false,
+});

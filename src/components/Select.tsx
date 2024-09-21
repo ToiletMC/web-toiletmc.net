@@ -84,12 +84,8 @@ export default function Select({
           border: 5px solid var(--primary);
           padding: 0 1.5rem;
           color: var(--primary);
-          background-color: #fff;
+          background-color: var(--bg);
           position: relative;
-
-          @media screen and (prefers-color-scheme: dark) {
-            background-color: #000;
-          }
 
           &::after {
             content: "▶";
@@ -115,11 +111,7 @@ export default function Select({
           width: ${buttonWidth}px;
           border: 5px solid var(--primary);
           border-radius: 1.5rem;
-          background-color: #fff;
-
-          @media screen and (prefers-color-scheme: dark) {
-            background-color: #000;
-          }
+          background-color: var(--bg);
         `}
       >
         <div

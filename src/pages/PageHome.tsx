@@ -3,16 +3,55 @@ import React from "react";
 import toast from "react-hot-toast";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { isMobile, pageAtom } from "../states";
+import { isDarkAtom, isMobile, pageAtom } from "../states";
 import BottomLinks from "../components/BottomLinks";
+import SwitchThemeIcon from "../assets/switch_theme.svg?react";
+import gsap from "gsap";
 
 /**
  * 首页点进去以后显示的5个大号链接
  */
 export default function IntroLinks() {
+  const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+  const [animating, setAnimating] = React.useState(false);
+
   const copyAddress = () => {
     navigator.clipboard.writeText("play.toiletmc.net");
     toast.success("已复制服务器地址 :)");
+  };
+
+  const switchTheme = (event: React.MouseEvent) => {
+    if (animating) return;
+    setAnimating(true);
+    setIsDark(!isDark);
+    const mousePos = { x: event.clientX, y: event.clientY };
+    const introPos = document.getElementById("intro")!.getBoundingClientRect();
+    gsap.set("#switch-theme-ripple", {
+      position: "absolute",
+      left: mousePos.x - introPos.left,
+      top: mousePos.y - introPos.top,
+      borderRadius: "50%",
+      width: 1,
+      height: 1,
+      x: "-50%",
+      y: "-50%",
+      zIndex: 0,
+      pointerEvents: "none",
+      scale: 0,
+      backgroundColor: isDark ? "#000" : "#fff",
+    });
+    gsap
+      .to("#switch-theme-ripple", {
+        duration: 1,
+        scale: 5000,
+        ease: "power2.inOut",
+      })
+      .then(() => {
+        gsap.set("#intro-logo", {
+          color: isDark ? "#000" : "#fff",
+        });
+        setAnimating(false);
+      });
   };
 
   return (
@@ -53,6 +92,34 @@ export default function IntroLinks() {
         `}
       ></div>
       <BottomLinks />
+      {/* 切换主题按钮 */}
+      <div
+        css={css`
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          z-index: 100;
+          border-radius: 50%;
+          background-color: #5c75ec;
+          width: 2rem;
+          height: 2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            opacity: 0.8;
+          }
+          &:active {
+            transform: scale(0.8);
+          }
+        `}
+        onClick={switchTheme}
+      >
+        <SwitchThemeIcon />
+      </div>
     </div>
   );
 }
@@ -98,6 +165,7 @@ function BigLink({
         text-decoration: none;
         line-height: 1;
         position: relative;
+        width: fit-content;
         ${italic && "font-style: italic;"}
 
         &:hover {

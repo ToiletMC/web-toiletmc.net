@@ -5,7 +5,13 @@ import gsap from "gsap";
 import PageHome from "../pages/PageHome";
 import { pages } from "../pages";
 import { useRecoilState } from "recoil";
-import { hookAtom, isMobile, pageAtom, prevNextAtom } from "../states";
+import {
+  hookAtom,
+  isDarkAtom,
+  isMobile,
+  pageAtom,
+  prevNextAtom,
+} from "../states";
 import PageFrame from "./PageFrame";
 
 /**
@@ -13,7 +19,7 @@ import PageFrame from "./PageFrame";
  */
 export default function Intro() {
   const [page, setPage] = useRecoilState(pageAtom);
-  const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const [isDark] = useRecoilState(isDarkAtom);
   const [opened, setOpened] = React.useState(false);
   const [, setPrevNext] = useRecoilState(prevNextAtom);
   const [, setHook] = useRecoilState(hookAtom);
@@ -30,7 +36,6 @@ export default function Intro() {
     });
     gsap.to("#intro-logo", {
       x: -800,
-      color: isDark ? "#000" : undefined,
       cursor: "default",
       duration: 1,
     });
@@ -54,30 +59,21 @@ export default function Intro() {
       ease: "back.out",
       stagger: 0.1,
     });
-  }, [isDark, opened]);
+  }, [opened]);
 
-  const detectHash = React.useCallback(() => {
+  const updatePageByHash = React.useCallback(() => {
+    console.log("update page by hash");
     const hash = decodeURIComponent(window.location.hash.slice(1));
-    console.log("hash", hash);
-    if (hash) {
-      const match = hash.match(/^4:(.+)$/);
-      if (match) {
-        const [, name] = match;
-        setHook(name);
-        setPage(4);
-        if (!opened) {
-          handleLogoClick();
-        }
-      } else {
-        setPage(hash === "" ? -1 : parseInt(hash));
-        window.location.hash = page === -1 ? "" : page.toString();
-      }
+    if (!parseInt(hash)) {
+      return;
     }
-  }, [handleLogoClick, opened, page, setHook, setPage]);
+    setPage(hash === "" ? -1 : parseInt(hash));
+  }, [setPage]);
 
   React.useEffect(() => {
     console.log("navigate to", page);
-    detectHash();
+    window.location.hash = page === -1 ? "" : page.toString();
+    updatePageByHash();
     if (page > -1 && !pages[page].prevNext) {
       setPrevNext([]);
     }
@@ -97,15 +93,32 @@ export default function Intro() {
       color: page === -1 ? "#5c75ec" : pages[page].color,
       duration: 1.5,
     });
-  }, [page, isDark, setPrevNext, detectHash]);
+  }, [page, isDark, setPrevNext, updatePageByHash]);
 
   React.useEffect(() => {
-    window.addEventListener("hashchange", detectHash);
+    window.addEventListener("hashchange", updatePageByHash);
 
     return () => {
-      window.removeEventListener("hashchange", detectHash);
+      window.removeEventListener("hashchange", updatePageByHash);
     };
-  }, [detectHash]);
+  }, [updatePageByHash]);
+
+  React.useEffect(() => {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    if (hash) {
+      console.log("hash:", hash);
+      const match = hash.match(/^hook:(.+)$/);
+      if (match) {
+        console.log("navigate to hook");
+        const [, name] = match;
+        setHook(name);
+        if (!opened) {
+          handleLogoClick();
+        }
+        setPage(4);
+      }
+    }
+  }, [handleLogoClick, opened, setHook, setPage]);
 
   return (
     // 外层div用于限制logo放大的尺寸
@@ -132,13 +145,9 @@ export default function Intro() {
           height: 25rem;
           cursor: pointer;
           color: #fff;
-
-          /* @media screen and (prefers-color-scheme: dark) {
-            color: #5268d4;
-            opacity: 0.5;
-          } */
         `}
       ></Logo>
+      <div id="switch-theme-ripple"></div>
       {/* 页面内容 */}
       <div
         id="intro-content"

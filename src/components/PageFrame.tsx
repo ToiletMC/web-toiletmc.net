@@ -1,17 +1,19 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { isMobile, pageAtom, prevNextAtom } from "../states";
+import { isDarkAtom, isMobile, pageAtom, prevNextAtom } from "../states";
 import { pages } from "../pages";
 
 export default function PageFrame({ children }: React.PropsWithChildren) {
   const [page] = useRecoilState(pageAtom);
   const [prevNext] = useRecoilState(prevNextAtom);
+  const [isDark] = useRecoilState(isDarkAtom);
 
   return (
     <div
       css={css`
         --primary: ${pages[page].color};
+        --bg: ${isDark ? "#000" : "#fff"};
         ${isMobile
           ? `
         padding: 1rem;

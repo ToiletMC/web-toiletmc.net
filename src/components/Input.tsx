@@ -20,12 +20,8 @@ export default function Input({
         text-align: left;
         border: 5px solid var(--primary);
         padding: 0 1.5rem;
-        background-color: #fff;
+        background-color: var(--bg);
         color: var(--primary);
-
-        @media screen and (prefers-color-scheme: dark) {
-          background-color: #000;
-        }
       `}
       type="text"
       value={value}
