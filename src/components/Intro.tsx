@@ -198,7 +198,7 @@ export default function Intro() {
             position: absolute;
             top: 50%;
             left: 0;
-            transform: translateY(-50%);
+            ${page === 0 ? "" : "transform: translateY(-50%);"}
             writing-mode: vertical-lr;
             font-size: 9.25rem;
             font-weight: 100;

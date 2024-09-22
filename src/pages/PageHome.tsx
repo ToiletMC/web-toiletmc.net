@@ -47,12 +47,13 @@ export default function IntroLinks() {
         scale: 5000,
         ease: "power2.inOut",
       })
-      .then(() => {
+      .then(() =>
         gsap.set("#intro-logo", {
           color: isDark ? "#000" : "#fff",
-        });
-        setAnimating(false);
-      });
+          delay: 0.5,
+        })
+      )
+      .then(() => setAnimating(false));
   };
 
   return (

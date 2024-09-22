@@ -31,7 +31,7 @@ export default function Sponsors() {
         duration: sponsors.length * 0.75,
         ease: CustomEase.create(
           "custom",
-          "M0,0 C0,0 0.011,0.058 0.011,0.058 0.011,0.058 1,1 1,1 "
+          "M0,0 C0,0 0.011,0.1 0.011,0.1 0.011,0.1 1,1 1,1 "
         ),
       }
     );

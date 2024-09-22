@@ -5,7 +5,6 @@ export default function PageWiki() {
     <iframe
       src="https://wiki.toiletmc.net/"
       css={css`
-        margin-left: 13rem;
         width: 100%;
         height: 100%;
         border: none;
