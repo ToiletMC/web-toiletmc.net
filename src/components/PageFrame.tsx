@@ -31,14 +31,15 @@ export default function PageFrame({ children }: React.PropsWithChildren) {
         overflow-y: auto;
 
         ::-webkit-scrollbar {
-          background-color: transparent;
+          /* background-color: transparent;
           width: 0.5rem;
-          height: 0.5rem;
+          height: 0.5rem; */
+          opacity: 0;
         }
-        ::-webkit-scrollbar-thumb {
+        /* ::-webkit-scrollbar-thumb {
           background-color: var(--primary);
           border-radius: 10px;
-        }
+        } */
       `}
     >
       <div
@@ -48,6 +49,8 @@ export default function PageFrame({ children }: React.PropsWithChildren) {
           color: var(--primary);
           text-decoration: none;
           line-height: 1;
+          /* 禁用换行，文字可以在容器外面 */
+          white-space: nowrap;
         `}
       >
         {pages[page].name}
