@@ -38,6 +38,7 @@ export default function PageScreenshot() {
     if (isPrev) {
       gsap.set(["#carousel", "#description"], {
         x: "-50%",
+        // duration: 3,
       });
       carousel.current?.insertBefore(el, carousel.current.firstChild);
       description.current?.insertBefore(descEl, description.current.firstChild);
@@ -48,6 +49,7 @@ export default function PageScreenshot() {
     gsap
       .to(["#carousel", "#description"], {
         x: isPrev ? "0%" : "-50%",
+        // duration: 3,
       })
       .then(() => {
         (isPrev ? el.nextElementSibling : el.previousElementSibling)?.remove();
@@ -66,7 +68,7 @@ export default function PageScreenshot() {
 
   const buildImageElement = (image: string) => {
     const el = document.createElement("div");
-    el.style.width = "45vw";
+    el.style.width = "var(--width)";
     el.style.height = "100%";
     el.style.backgroundImage = `url(${image})`;
     el.style.backgroundSize = "cover";
@@ -75,7 +77,9 @@ export default function PageScreenshot() {
   };
   const buildDescriptionElement = (description: string) => {
     const el = document.createElement("div");
-    el.style.width = "45vw";
+    el.style.width = "var(--width)";
+    // el.style.display = "inline-block";
+    el.style.flexShrink = "0";
     el.textContent = description;
     return el;
   };
@@ -83,17 +87,32 @@ export default function PageScreenshot() {
   return (
     <div
       css={css`
+        --width: 60rem;
+        width: var(--width);
         margin-top: 2rem;
+        overflow: hidden;
+
+        @media screen and (max-width: 1350px) {
+          --width: 45rem;
+        }
+        @media screen and (max-width: 1020px) {
+          --width: 40rem;
+        }
+        @media screen and (max-width: 900px) {
+          --width: 30rem;
+        }
+        @media screen and (max-width: 730px) {
+          --width: 20rem;
+        }
       `}
     >
       <div
         css={css`
-          width: 45vw;
-          height: 25vw;
+          width: 100%;
+          aspect-ratio: 45 / 25;
           overflow: hidden;
           border-radius: 1rem;
           position: relative;
-          border: 3px solid var(--primary);
         `}
       >
         <div
@@ -108,27 +127,18 @@ export default function PageScreenshot() {
         ></div>
       </div>
       <div
+        id="description"
         css={css`
-          width: 45vw;
-          overflow: hidden;
-          border-radius: 1rem;
-          position: relative;
+          display: flex;
+          overflow: auto;
+          width: 200%;
+          font-family: serif;
+          text-align: center;
+          flex-wrap: nowrap;
           margin-top: 1rem;
         `}
-      >
-        <div
-          id="description"
-          css={css`
-            display: flex;
-            overflow: auto;
-            min-width: min-content;
-            height: 100%;
-            font-family: serif;
-            text-align: center;
-          `}
-          ref={description}
-        ></div>
-      </div>
+        ref={description}
+      ></div>
     </div>
   );
 }
